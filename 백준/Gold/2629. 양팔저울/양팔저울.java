@@ -1,3 +1,7 @@
+/*
+ * dp[i][w] : i개의 추로 w인 공의 무게를 확인 할 수 있는가
+ * 유도 : 아무거도 않기, 추를 추가, 추 무게빼기
+ */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
