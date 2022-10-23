@@ -1,6 +1,7 @@
 /*
  * dp[i][w] : i개의 추로 w인 공의 무게를 확인 할 수 있는가
  * 유도 : 아무거도 않기, 추를 추가, 추 무게빼기
+ 
  */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -34,9 +35,9 @@ public class Main {
 		StringTokenizer st; 
 		
 		chooCnt = Integer.parseInt(in.readLine());
-		chooArr = new int[31];
+		chooArr = new int[chooCnt+1];
 		
-		dp = new boolean[31][15001];
+		dp = new boolean[chooCnt+1][15001];
 		
 		st = new StringTokenizer(in.readLine());
 		for(int i=0; i<chooCnt; i++)chooArr[i] = Integer.parseInt(st.nextToken());
