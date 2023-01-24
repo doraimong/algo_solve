@@ -1,34 +1,36 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
-
-int main() {
-
-    int get;
-   cin >> get;
-
-    vector<pair<long, long>> v;
-
-    long temp1, temp2;
-    bool zero = false;
-    for (int i = 0; i < get; i++) {
-       cin >> temp1 >> temp2;
-        v.push_back({ temp2, temp1 });
+int main()
+{
+    int total;
+    cin>>total;
+    
+    vector<pair<long, long>> arr;
+    
+    for(int i=0; i<total; i++){
+        long a,b;
+        cin>>a>>b;
+        arr.push_back({b,a});//0 종료 1 시작
     }
-    //정렬
-    sort(v.begin(), v.end());
-    //solved
-    int res = 1, beforeindex=0;
-    for (int i = 1; i < v.size(); i++) {
-        if (v[beforeindex].first <= v[i].second) {
-           beforeindex = i;
-           res++;
-        }       
+    
+    sort(arr.begin(), arr.end()); 
+    
+    long start = arr[0].first;
+    long res=1;
+    
+    
+    
+    for(int i=1; i<total; i++){
+        if(start <= arr[i].second){
+            res++;
+            start = arr[i].first;
+        }
     }
-
-    cout << res;
-
+    
+    cout<<res;
+ 
     return 0;
 }
