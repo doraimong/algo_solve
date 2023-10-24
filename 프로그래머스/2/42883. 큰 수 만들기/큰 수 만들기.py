@@ -2,21 +2,12 @@ def solution(number, k):
     stack = []
     
     for num in number:
-        # print(stack)
-        while stack and stack[-1] < num and k > 0:
+        while stack and stack[-1] < num and k > 0: # 앞의 수보다 뒤의 수(num)이 크고 and 뺄 개수가 아직 남으면 
             stack.pop()
             k-=1
         stack.append(num)
-        # print(f"res = {stack}")
         
-     # k가 남았다면 그 만큼 작은 숫자를 골라서 빼야함
-    # temp = stack
-    # temp = temp.sort()
-    # print(stack)
-    # for i in temp[:k]:
-    #     stack.remove(i)
-    # res = ''.join(stack)
-        
+    # 앞은 큰수 뒤는 작은 수 구조가 된다. -> 뒤에서 남은 k 만큼만 빼주면 됌
     return ''.join(stack[:len(stack)-k])
 
 
