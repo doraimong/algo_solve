@@ -10,10 +10,11 @@ def solution(sequence):
     
     # 펄스 수열 1부터 시작
     for i,s in enumerate(sequence):
-        if i % 2 == 0 : # 1
-            best1 = max(s, best1+s)
-        else : # * -1
-            best1 = max(best1 -s,-s)
+        # if i % 2 == 0 : # 1
+        #     best1 = max(best1 + s, s)
+        # else : # * -1
+        #     best1 = max(best1 - s,-s)
+        best1 = max(best1 + s * [1,-1][i%2], s * [1,-1][i%2])
         answer = max(answer, best1)
     
     # 펄스 수열 -1부터 시작
