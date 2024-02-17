@@ -4,42 +4,39 @@ records : 시간, 차량 번호, 입출 여부
 '''
 import math
 def solution(fees, records):
-    def change(r):
+    def change(r): #한개의 records를 변환(시간-> 분)
         temp = r.split()
         a,b = map(int, temp[0].split(':'))
         return [a*60+b, temp[1], temp[2]]
     
-    def changeFee(time):
-        if time <= fees[0]:
-            return fees[1]
-        else:
-            return int(math.ceil((time - fees[0]) / fees[2]) * fees[3]) + fees[1]
+    def changeFee(time): # 분단위 시간에 대한 요금 책정
+        return math.ceil(max(0, (time - fees[0])) / fees[2]) * fees[3] + fees[1]
     
     answer = []
-    
     records = list(change(r) for r in records)
-        
-    IN, OUT = [], []
+    IN, OUT = [], []# 입,출에 대한 분리
     for r in records: IN.append(r) if r[2] == 'IN' else OUT.append(r)
-      
+    
+    # 종료1 -> OUT기록이 없는 경우
     if len(OUT) == 0:
         answer.append(changeFee((23*60+59) - IN[0][0]))
         return answer
     
-    answerDict = dict()
+    parkingTimeDict = dict() # 차량 번호별 시간 저장
     for i in IN:
-        if i[1] not in answerDict : answerDict[i[1]] = 0
-        for idx,o in enumerate(OUT): # OUT기록을 돌리기
-            if i[1] == o[1] and i[0] <= o[0] : # IN, OUT기록 중 차량 번호 동일 & 입 출 기록이 알맞다면 시간에 맞게 계산
-                answerDict[i[1]] += o[0] - i[0]
+        if i[1] not in parkingTimeDict : parkingTimeDict[i[1]] = 0
+        for idx,o in enumerate(OUT): 
+            #IN, OUT기록 중 차량 번호 동일 & 입 출 기록이 있다 -> 출차 기록에 따라 시간 계산
+            if i[1] == o[1] and i[0] <= o[0] : 
+                parkingTimeDict[i[1]] += o[0] - i[0]
                 break;
-            # 출차 기록이 업는 경우
+            # 출차 기록이 업는 경우(OUT 마지막까지 돌았는데도 for문 탈출 불가 -> 출차 기록이 없다(23:59))
             if idx == len(OUT)-1: 
-                answerDict[i[1]] += (23*60+59) - i[0]
+                parkingTimeDict[i[1]] += (23*60+59) - i[0]
                 
-    print(answerDict)
-    temp = sorted(answerDict.items())
+    temp = sorted(parkingTimeDict.items()) # 차량 번호 오름차순 정렬
     for i in temp:
         answer.append(changeFee(i[1]))
         
+    # 종료 2
     return answer
